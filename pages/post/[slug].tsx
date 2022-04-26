@@ -5,12 +5,39 @@ import { sanityClient, urlFor } from '../../sanity'
 import { Post } from '../../types'
 import PortableText from 'react-portable-text'
 import Link from 'next/link'
+import { useForm, SubmitHandler } from 'react-hook-form'
+
+interface IFormInput {
+  _id: string
+  name: string
+  email: string
+  comment: string
+}
 
 interface Props {
   post: Post
 }
 
 const PostSlug = ({ post }: Props) => {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<IFormInput>()
+
+  const onSubmit: SubmitHandler<IFormInput> = (data) => {
+    fetch('/api/createComment', {
+      method: 'POST',
+      body: JSON.stringify(data),
+    })
+      .then(() => {
+        console.log(data)
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+  }
+
   return (
     <main>
       <Header />
@@ -38,7 +65,7 @@ const PostSlug = ({ post }: Props) => {
           </p>
         </div>
 
-        <div className='mt-10'>
+        <div className="mt-10">
           <PortableText
             dataset={process.env.NEXT_PUBLIC_SANITY_DATASET!}
             projectId={process.env.NEXT_PUBLIC_SANITY_PROJECT_ID!}
@@ -64,6 +91,84 @@ const PostSlug = ({ post }: Props) => {
             }}
           />
         </div>
+
+        <hr className="max-w-lf my-5 mx-auto border border-color-secondary" />
+
+        <form
+          onSubmit={handleSubmit(onSubmit)}
+          className="mx-auto mb-10 flex max-w-2xl flex-col p-5 "
+        >
+          <h3 className="text-sm text-color-secondary">Enjoyed the article?</h3>
+          <h3 className="text-3xl font-bold">Leave a comment below!</h3>
+          <hr className="mt-2 py-3" />
+
+          <input
+            {...register('_id')}
+            type="hidden"
+            name="_id"
+            value={post._id}
+          />
+
+          <label className="mb-5 block">
+            <div className="grid grid-cols-3">
+              <span className="text-gray-700">Name</span>
+              <div className="col-span-2">
+                {errors.name && (
+                  <p className=" grid justify-items-end text-sm font-light italic text-red-500">
+                    Name is required
+                  </p>
+                )}
+              </div>
+            </div>
+            <input
+              {...register('name', { required: true })}
+              placeholder="tem"
+              type="text"
+              className="form-input mt-1 block w-full rounded border bg-bg py-2 px-3 shadow outline-none ring-color-primary focus:ring"
+            />
+          </label>
+          <label className="mb-5 block">
+            <div className="grid grid-cols-3">
+              <span className="text-gray-700">Email</span>
+              <div className="col-span-2">
+                {errors.email && (
+                  <p className="grid justify-items-end text-sm font-light italic text-red-500">
+                    Email is required
+                  </p>
+                )}
+              </div>
+            </div>
+            <input
+              {...register('email', { required: true })}
+              placeholder="tem@bee.com"
+              type="email"
+              className="form-input mt-1 block w-full rounded border bg-bg py-2 px-3 shadow outline-none ring-color-primary focus:ring"
+            />
+          </label>
+          <label className="mb-5 block ">
+            <div className="grid grid-cols-3">
+              <span className="text-gray-700">Comment</span>
+              <div className="col-span-2">
+                {errors.comment && (
+                  <p className=" grid justify-items-end text-sm font-light italic text-red-500">
+                    Comment is required
+                  </p>
+                )}
+              </div>
+            </div>
+            <textarea
+              {...register('comment', { required: true })}
+              placeholder="some cool comment"
+              rows={8}
+              className="form-textarea mt-1 block  w-full rounded border bg-bg py-2 px-3 shadow  outline-none ring-color-primary focus:ring"
+            />
+          </label>
+
+          <input
+            type="submit"
+            className="focus:shadow-outline duration-600 cursor-pointer rounded bg-color-primary/70 py-2 px-4 font-bold text-white shadow transition-colors ease-in-out hover:bg-color-primary focus:outline-none"
+          />
+        </form>
       </article>
     </main>
   )
