@@ -5,7 +5,7 @@ interface Props {
 }
 
 function Layout({ children }: Props) {
-  return <div className="bg-bg min-h-screen font-Overpass">{children}</div>
+  return <div className="bg-bg min-h-screen font-Overpass text-color-primary">{children}</div>
 }
 
 export default Layout
