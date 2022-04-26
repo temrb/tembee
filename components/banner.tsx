@@ -9,7 +9,7 @@ const Banner = () => {
           <span className=" text-color-secondary decoration-4">tembee.</span>
         </h1>
         <h2 className="text-white">
-            text
+            new posts every day, curated by 
         </h2>
       </div>
 
