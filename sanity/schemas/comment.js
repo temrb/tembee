@@ -1,7 +1,7 @@
 export default {
     name: "comment",
     type: "document",
-    title: "comment",
+    title: "Comment",
     fields: [
         { name: "name", type: "string" },
         {
