@@ -15,7 +15,7 @@ const Header = () => {
           </div>
         </Link>
       </div>
-      <div className="hidden items-center space-x-5 md:inline-flex">
+      {/* <div className="hidden items-center space-x-5 md:inline-flex">
         <h3 className="cursor-pointer">contact</h3>
         <h3
           className="cursor-pointer rounded-full bg-color-secondary px-4 py-1 text-white"
@@ -23,7 +23,7 @@ const Header = () => {
         >
           subscribe
         </h3>
-      </div>
+      </div> */}
 
       {/* <div className='flex items-center space-x-5 text-color-secondary'>
         <h3>sign in</h3>
