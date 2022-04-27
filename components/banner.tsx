@@ -9,12 +9,12 @@ const Banner = () => {
           <span className=" text-color-secondary decoration-4">tembee.</span>
         </h1>
         <h2 className="text-white">
-            new posts every day, curated by 
+          new posts every day, curated by{' '}
+          <span className="text-color-secondary ">test</span>.
         </h2>
       </div>
 
-      <div className="h32 hidden md:inline-flex lg:h-full">
-      </div>
+      <div className="h32 hidden md:inline-flex lg:h-full"></div>
     </main>
   )
 }
