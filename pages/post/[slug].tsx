@@ -1,5 +1,5 @@
 import { GetStaticProps } from 'next'
-import React from 'react'
+import React, { useState } from 'react'
 import Header from '../../components/header'
 import { sanityClient, urlFor } from '../../sanity'
 import { Post } from '../../types'
@@ -19,6 +19,8 @@ interface Props {
 }
 
 const PostSlug = ({ post }: Props) => {
+  const [submitted, setSubmitted] = useState(false)
+
   const {
     register,
     handleSubmit,
@@ -32,9 +34,11 @@ const PostSlug = ({ post }: Props) => {
     })
       .then(() => {
         console.log(data)
+        setSubmitted(true)
       })
       .catch((err) => {
         console.log(err)
+        setSubmitted(false)
       })
   }
 
@@ -94,81 +98,106 @@ const PostSlug = ({ post }: Props) => {
 
         <hr className="max-w-lf my-5 mx-auto border border-color-secondary" />
 
-        <form
-          onSubmit={handleSubmit(onSubmit)}
-          className="mx-auto mb-10 flex max-w-2xl flex-col p-5 "
-        >
-          <h3 className="text-sm text-color-secondary">Enjoyed the article?</h3>
-          <h3 className="text-3xl font-bold">Leave a comment below!</h3>
-          <hr className="mt-2 py-3" />
+        {submitted ? (
+          <div className="my-10 mx-auto flex max-w-2xl flex-col rounded-xl bg-color-primary py-10 text-center text-white">
+            <h3 className="mb-5 text-3xl font-bold">Comment submitted! 👍</h3>
+            <p className="text-sm">
+              Once it has been approved, it will appear on the site.
+            </p>
+          </div>
+        ) : (
+          <form
+            onSubmit={handleSubmit(onSubmit)}
+            className="mx-auto mb-10 flex max-w-2xl flex-col p-5 "
+          >
+            <h3 className="text-sm text-color-secondary">
+              Enjoyed the article?
+            </h3>
+            <h3 className="text-3xl font-bold">Leave a comment below!</h3>
+            <hr className="mt-2 py-3" />
 
-          <input
-            {...register('_id')}
-            type="hidden"
-            name="_id"
-            value={post._id}
-          />
-
-          <label className="mb-5 block">
-            <div className="grid grid-cols-3">
-              <span className="text-gray-700">Name</span>
-              <div className="col-span-2">
-                {errors.name && (
-                  <p className=" grid justify-items-end text-sm font-light italic text-red-500">
-                    Name is required
-                  </p>
-                )}
-              </div>
-            </div>
             <input
-              {...register('name', { required: true })}
-              placeholder="tem"
-              type="text"
-              className="form-input mt-1 block w-full rounded border bg-bg py-2 px-3 shadow outline-none ring-color-primary focus:ring"
+              {...register('_id')}
+              type="hidden"
+              name="_id"
+              value={post._id}
             />
-          </label>
-          <label className="mb-5 block">
-            <div className="grid grid-cols-3">
-              <span className="text-gray-700">Email</span>
-              <div className="col-span-2">
-                {errors.email && (
-                  <p className="grid justify-items-end text-sm font-light italic text-red-500">
-                    Email is required
-                  </p>
-                )}
-              </div>
-            </div>
-            <input
-              {...register('email', { required: true })}
-              placeholder="tem@bee.com"
-              type="email"
-              className="form-input mt-1 block w-full rounded border bg-bg py-2 px-3 shadow outline-none ring-color-primary focus:ring"
-            />
-          </label>
-          <label className="mb-5 block ">
-            <div className="grid grid-cols-3">
-              <span className="text-gray-700">Comment</span>
-              <div className="col-span-2">
-                {errors.comment && (
-                  <p className=" grid justify-items-end text-sm font-light italic text-red-500">
-                    Comment is required
-                  </p>
-                )}
-              </div>
-            </div>
-            <textarea
-              {...register('comment', { required: true })}
-              placeholder="some cool comment"
-              rows={8}
-              className="form-textarea mt-1 block  w-full rounded border bg-bg py-2 px-3 shadow  outline-none ring-color-primary focus:ring"
-            />
-          </label>
 
-          <input
-            type="submit"
-            className="focus:shadow-outline duration-600 cursor-pointer rounded bg-color-primary/70 py-2 px-4 font-bold text-white shadow transition-colors ease-in-out hover:bg-color-primary focus:outline-none"
-          />
-        </form>
+            <label className="mb-5 block">
+              <div className="grid grid-cols-3">
+                <span className="text-gray-700">Name</span>
+                <div className="col-span-2">
+                  {errors.name && (
+                    <p className=" grid justify-items-end text-sm font-light italic text-red-500">
+                      Name is required
+                    </p>
+                  )}
+                </div>
+              </div>
+              <input
+                {...register('name', { required: true })}
+                placeholder="tem"
+                type="text"
+                className="form-input mt-1 block w-full rounded border bg-bg py-2 px-3 shadow outline-none ring-color-primary focus:ring"
+              />
+            </label>
+            <label className="mb-5 block">
+              <div className="grid grid-cols-3">
+                <span className="text-gray-700">Email</span>
+                <div className="col-span-2">
+                  {errors.email && (
+                    <p className="grid justify-items-end text-sm font-light italic text-red-500">
+                      Email is required
+                    </p>
+                  )}
+                </div>
+              </div>
+              <input
+                {...register('email', { required: true })}
+                placeholder="tem@bee.com"
+                type="email"
+                className="form-input mt-1 block w-full rounded border bg-bg py-2 px-3 shadow outline-none ring-color-primary focus:ring"
+              />
+            </label>
+            <label className="mb-5 block ">
+              <div className="grid grid-cols-3">
+                <span className="text-gray-700">Comment</span>
+                <div className="col-span-2">
+                  {errors.comment && (
+                    <p className=" grid justify-items-end text-sm font-light italic text-red-500">
+                      Comment is required
+                    </p>
+                  )}
+                </div>
+              </div>
+              <textarea
+                {...register('comment', { required: true })}
+                placeholder="some cool comment"
+                rows={8}
+                className="form-textarea mt-1 block  w-full rounded border bg-bg py-2 px-3 shadow  outline-none ring-color-primary focus:ring"
+              />
+            </label>
+
+            <input
+              type="submit"
+              className="focus:shadow-outline duration-600 cursor-pointer rounded bg-color-primary/70 py-2 px-4 font-bold text-white shadow transition-colors ease-in-out hover:bg-color-primary focus:outline-none"
+            />
+          </form>
+        )}
+
+        {/* comments */}
+        <div className="my-10 mx-auto flex max-w-2xl flex-col space-y-2 p-10 shadow-md shadow-color-primary">
+          <h3 className="text-4xl">Comments</h3>
+          <hr className="pb-2" />
+          {post.comments.map((comment) => (
+            <div>
+              <p>
+                <span className="text-color-secondary">{comment.name}</span>:{' '}
+                {comment.comment}
+              </p>
+            </div>
+          ))}
+        </div>
       </article>
     </main>
   )
@@ -207,6 +236,11 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
   name,
   image
 },
+'comments': *[
+  _type =='comment'
+  && post._ref == ^._id 
+  && approved == true
+],
 description,
 mainImage,
 slug,

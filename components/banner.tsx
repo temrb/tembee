@@ -14,7 +14,6 @@ const Banner = () => {
       </div>
 
       <div className="h32 hidden md:inline-flex lg:h-full">
-
       </div>
     </main>
   )
