@@ -128,7 +128,7 @@ const PostSlug = ({ post }: Props) => {
                 <span className="text-gray-700">Name</span>
                 <div className="col-span-2">
                   {errors.name && (
-                    <p className=" grid justify-items-end text-sm font-light italic text-red-500">
+                    <p className=" duration-600 grid justify-items-end text-sm font-light italic text-red-500  transition-all ease-in-out">
                       Name is required
                     </p>
                   )}
@@ -138,7 +138,7 @@ const PostSlug = ({ post }: Props) => {
                 {...register('name', { required: true })}
                 placeholder="tem"
                 type="text"
-                className="form-input mt-1 block w-full rounded border bg-bg py-2 px-3 shadow outline-none ring-color-primary focus:ring"
+                className="form-input duration-600 mt-1 block w-full rounded border bg-bg py-2 px-3 shadow outline-none ring-color-primary transition-all  ease-in-out focus:ring"
               />
             </label>
             <label className="mb-5 block">
@@ -146,7 +146,7 @@ const PostSlug = ({ post }: Props) => {
                 <span className="text-gray-700">Email</span>
                 <div className="col-span-2">
                   {errors.email && (
-                    <p className="grid justify-items-end text-sm font-light italic text-red-500">
+                    <p className="duration-600 grid justify-items-end text-sm font-light italic text-red-500  transition-all ease-in-out">
                       Email is required
                     </p>
                   )}
@@ -156,7 +156,7 @@ const PostSlug = ({ post }: Props) => {
                 {...register('email', { required: true })}
                 placeholder="tem@bee.com"
                 type="email"
-                className="form-input mt-1 block w-full rounded border bg-bg py-2 px-3 shadow outline-none ring-color-primary focus:ring"
+                className="form-input duration-600 mt-1 block w-full rounded border bg-bg py-2 px-3 shadow outline-none ring-color-primary transition-all  ease-in-out focus:ring"
               />
             </label>
             <label className="mb-5 block ">
@@ -164,7 +164,7 @@ const PostSlug = ({ post }: Props) => {
                 <span className="text-gray-700">Comment</span>
                 <div className="col-span-2">
                   {errors.comment && (
-                    <p className=" grid justify-items-end text-sm font-light italic text-red-500">
+                    <p className=" duration-600 grid justify-items-end text-sm font-light italic text-red-500  transition-all ease-in-out">
                       Comment is required
                     </p>
                   )}
@@ -174,7 +174,7 @@ const PostSlug = ({ post }: Props) => {
                 {...register('comment', { required: true })}
                 placeholder="some cool comment"
                 rows={8}
-                className="form-textarea mt-1 block  w-full rounded border bg-bg py-2 px-3 shadow  outline-none ring-color-primary focus:ring"
+                className="form-textarea duration-600 mt-1 block w-full rounded border bg-bg  py-2 px-3 shadow outline-none ring-color-primary  transition-all ease-in-out focus:ring"
               />
             </label>
 
