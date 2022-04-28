@@ -1,11 +1,14 @@
 import { GetStaticProps } from 'next'
-import React, { useState } from 'react'
+import Link from 'next/link'
+import React, { useState, useEffect } from 'react'
 import Header from '../../components/header'
 import { sanityClient, urlFor } from '../../sanity'
 import { Post } from '../../types'
 import PortableText from 'react-portable-text'
-import Link from 'next/link'
 import { useForm, SubmitHandler } from 'react-hook-form'
+import { ShareIcon, ClipboardCheckIcon } from '@heroicons/react/solid'
+import { useSelector, useDispatch } from 'react-redux'
+import { setShared, setSubmitted } from '../../redux/features/postSlice'
 
 interface IFormInput {
   _id: string
@@ -13,13 +16,20 @@ interface IFormInput {
   email: string
   comment: string
 }
-
+interface RootState {
+  post: any
+}
 interface Props {
   post: Post
 }
 
 const PostSlug = ({ post }: Props) => {
-  const [submitted, setSubmitted] = useState(false)
+  // const [submitted, setSubmitted] = useState(false)
+  // const [shared, setShared] = useState(false)
+  const dispatch = useDispatch()
+
+  const submitted = useSelector((state: RootState) => state.post.submitted)
+  const shared = useSelector((state: RootState) => state.post.shared)
 
   const {
     register,
@@ -33,12 +43,28 @@ const PostSlug = ({ post }: Props) => {
       body: JSON.stringify(data),
     })
       .then(() => {
-        console.log(data)
-        setSubmitted(true)
+        dispatch(setSubmitted(true))
       })
       .catch((err) => {
-        console.log(err)
-        setSubmitted(false)
+        dispatch(setSubmitted(false))
+      })
+  }
+
+  let currentLocation: string
+  useEffect(() => {
+    currentLocation = window.location.href
+  })
+
+  const onShare = () => {
+    const clipboard = navigator.clipboard.writeText(currentLocation)
+    clipboard
+      .then(() => {
+        dispatch(setShared(true))
+      })
+      .then(() => {
+        setTimeout(() => {
+          dispatch(setShared(false))
+        }, 1500)
       })
   }
 
@@ -56,17 +82,42 @@ const PostSlug = ({ post }: Props) => {
         <h2 className="mb-2 text-xl font-light text-gray-500">
           {post.description}
         </h2>
-        <div className="flex items-center space-x-2">
-          <img
-            className="h-10 w-10 rounded-full"
-            src={urlFor(post.author.image).url()!}
-            alt=""
-          />
-          <p className="text-sm font-extralight">
-            Post by{' '}
-            <span className="text-color-secondary">{post.author.name}</span> -
-            Published at {new Date(post._createdAt).toLocaleDateString()}
-          </p>
+        <div className="mx-auto flex justify-between">
+          <div className="flex items-center space-x-2">
+            <img
+              className="h-10 w-10 rounded-full"
+              src={urlFor(post.author.image).url()!}
+              alt=""
+            />
+            <p className="text-sm font-extralight">
+              Post by{' '}
+              <span className="text-color-secondary">{post.author.name}</span> -
+              Published at {new Date(post._createdAt).toLocaleDateString()}
+            </p>
+          </div>
+          <div className="grid place-content-center">
+            {shared ? (
+              <div className="flex items-center gap-2">
+                <div className="text-sm font-extralight">Link Copied!</div>
+                <div
+                  onClick={onShare}
+                  className="flex gap-1 rounded-full bg-green-600 p-2 text-sm font-extralight text-white transition-colors duration-700 ease-in-out"
+                >
+                  <ClipboardCheckIcon className="h-5 w-5 font-extralight" />
+                </div>
+              </div>
+            ) : (
+              <div className="flex items-center gap-2">
+                <div className="text-sm font-extralight">Share</div>
+                <div
+                  onClick={onShare}
+                  className="flex cursor-pointer gap-1 rounded-full bg-color-primary/70 p-2 text-sm font-extralight text-white transition-colors duration-700 ease-in-out hover:bg-color-primary"
+                >
+                  <ShareIcon className="h-5 w-5 font-extralight" />
+                </div>
+              </div>
+            )}
+          </div>
         </div>
 
         <div className="mt-10">
