@@ -275,6 +275,6 @@ body
     props: {
       post,
     },
-    revalidate: 3600, // after 1hr, update the old cached version
+    revalidate: 300, // after 5mins, update the old cached version
   }
 }
