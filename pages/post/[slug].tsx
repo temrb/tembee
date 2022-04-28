@@ -71,8 +71,8 @@ const PostSlug = ({ post }: Props) => {
 
         <div className="mt-10">
           <PortableText
-            dataset={process.env.NEXT_PUBLIC_SANITY_DATASET!}
-            projectId={process.env.NEXT_PUBLIC_SANITY_PROJECT_ID!}
+            dataset={process.env.NEXT_PUBLIC_SANITY_DATASET}
+            projectId={process.env.NEXT_PUBLIC_SANITY_PROJECT_ID}
             content={post.body}
             className=""
             serializers={{
@@ -81,6 +81,12 @@ const PostSlug = ({ post }: Props) => {
               ),
               h2: (props: any) => (
                 <h2 className="my-5 text-xl font-bold" {...props} />
+              ),
+              h3: (props: any) => (
+                <h3 className="my-5 text-lg font-bold" {...props} />
+              ),
+              h4: (props: any) => (
+                <h4 className="text-md my-5 font-bold" {...props} />
               ),
               li: ({ children }: any) => (
                 <li className="ml-4 list-disc">{children}</li>
@@ -91,6 +97,14 @@ const PostSlug = ({ post }: Props) => {
                     {children}
                   </a>
                 </Link>
+              ),
+              image: ({ asset, alt, caption }: any) => (
+                <img
+                  className="my-5"
+                  src={urlFor(asset).url()!}
+                  alt={alt}
+                  title={caption}
+                />
               ),
             }}
           />
@@ -261,6 +275,6 @@ body
     props: {
       post,
     },
-    revalidate: 3600, // after 1hr, update the old cached version
+    revalidate: 300, // after 5mins, update the old cached version
   }
 }
