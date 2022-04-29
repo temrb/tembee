@@ -24,8 +24,6 @@ interface Props {
 }
 
 const PostSlug = ({ post }: Props) => {
-  // const [submitted, setSubmitted] = useState(false)
-  // const [shared, setShared] = useState(false)
   const dispatch = useDispatch()
 
   const submitted = useSelector((state: RootState) => state.post.submitted)
@@ -64,7 +62,7 @@ const PostSlug = ({ post }: Props) => {
       .then(() => {
         setTimeout(() => {
           dispatch(setShared(false))
-        }, 1500)
+        }, 2000)
       })
   }
 
@@ -98,20 +96,18 @@ const PostSlug = ({ post }: Props) => {
           <div className="grid place-content-center">
             {shared ? (
               <div className="flex items-center gap-2">
-                <div className="text-sm font-extralight">Link Copied!</div>
                 <div
                   onClick={onShare}
-                  className="flex gap-1 rounded-full bg-green-600 p-2 text-sm font-extralight text-white transition-colors duration-700 ease-in-out"
+                  className="duration-400 flex gap-1 rounded-full bg-green-600 p-2 text-sm font-extralight text-white transition-colors ease-in-out"
                 >
                   <ClipboardCheckIcon className="h-5 w-5 font-extralight" />
                 </div>
               </div>
             ) : (
               <div className="flex items-center gap-2">
-                <div className="text-sm font-extralight">Share</div>
                 <div
                   onClick={onShare}
-                  className="flex cursor-pointer gap-1 rounded-full bg-color-primary/70 p-2 text-sm font-extralight text-white transition-colors duration-700 ease-in-out hover:bg-color-primary"
+                  className="duration-400 flex cursor-pointer gap-1 rounded-full bg-color-primary/70 p-2 text-sm font-extralight text-white transition-colors ease-in-out hover:bg-color-primary"
                 >
                   <ShareIcon className="h-5 w-5 font-extralight" />
                 </div>
@@ -119,6 +115,8 @@ const PostSlug = ({ post }: Props) => {
             )}
           </div>
         </div>
+
+        <hr className="my-10 mx-auto max-w-full border border-color-primary/20" />
 
         <div className="mt-10">
           <PortableText
@@ -161,7 +159,7 @@ const PostSlug = ({ post }: Props) => {
           />
         </div>
 
-        <hr className="max-w-lf my-5 mx-auto border border-color-secondary" />
+        <hr className="my-10 mx-auto max-w-full border border-color-primary/20" />
 
         {submitted ? (
           <div className="my-10 mx-auto flex max-w-2xl flex-col rounded-xl bg-color-primary py-10 text-center text-white">
@@ -253,7 +251,7 @@ const PostSlug = ({ post }: Props) => {
         {/* comments */}
         <div className="my-10 mx-auto flex max-w-2xl flex-col space-y-2 p-10 shadow-md shadow-color-primary">
           <h3 className="text-4xl">Comments</h3>
-          <hr className="pb-2" />
+          <hr className="my-10 max-w-full border border-color-primary/20" />
           {post.comments.map((comment) => (
             <div>
               <p>
