@@ -12,12 +12,12 @@ const Header = () => {
         </Link>
       </div>
       <div className="inline-flex items-center space-x-5">
-        <Link href="https://www.tiktok.com/@tembee.app">
+        <Link href="https://www.tiktok.com/@imtembee">
           <div className="text-l cursor-pointer rounded-full bg-color-primary py-1 px-3 text-color-secondary">
             tiktok
           </div>
         </Link>
-        <Link href="https://www.instagram.com/tembee.app/">
+        <Link href="https://www.instagram.com/imtembee/">
           <div className="text-l cursor-pointer rounded-full bg-color-primary py-1 px-3 text-color-secondary">
             insta
           </div>
