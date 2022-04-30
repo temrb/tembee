@@ -17,6 +17,7 @@ const Posts = ({ posts }: Props) => {
               className="object-full h-60 w-full transition-transform duration-200 ease-in-out group-hover:scale-105"
               src={urlFor(post.mainImage).url()}
               alt=""
+              loading="lazy"
             />
             <div className="flex justify-between gap-4 bg-white p-5">
               <div>
