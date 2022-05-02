@@ -17,7 +17,7 @@ const Header = () => {
             tiktok
           </div>
         </Link> */}
-        <Link href="https://www.instagram.com/imtembee/">
+        <Link href="https://www.instagram.com/tem.rb/">
           <div className="text-m cursor-pointer text-color-secondary">
             insta
           </div>
